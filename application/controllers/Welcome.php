@@ -32,8 +32,18 @@ class Welcome extends MY_Controller {
 	    $data["enterprise"] = $this->Api_model->getEnterpriseInCat();
 	    $content["catalogue"] =  pre_work_catalogue($data);
 	    $content["contents"] ="catalogue/tab";
-	    $this->load->view('template',$content);
+	    echo json_encode($content["catalogue"]["catalogue"]);
 	}
+
+    public function deux()
+    {
+        header("Access-Control-Allow-Origin: *");
+        $data["catalogue"] = $this->Api_model->getCatalogue();
+        $data["enterprise"] = $this->Api_model->getEnterpriseInCat();
+        $content["catalogue"] =  pre_work_catalogue($data);
+        $content["contents"] ="catalogue/tab";
+        echo json_encode($content["catalogue"]["store2"]);
+    }
 
 
 }

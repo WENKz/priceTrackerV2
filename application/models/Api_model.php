@@ -35,7 +35,7 @@ class Api_model extends  CI_Model
      public function getEnterpriseInCat(){
          return $this->db->query("SELECT c.id_boutique,b.nom_boutique,b.id_boutique FROM catalogue c 
 INNER JOIN  boutique b ON c.id_boutique = b.id_boutique 
-  ORDER BY b.id_boutique ASC
+  GROUP BY b.id_boutique ORDER BY b.id_boutique ASC
 ")->result_array();
      }
      public function getCatalogue(){
