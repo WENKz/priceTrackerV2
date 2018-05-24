@@ -124,13 +124,11 @@
       logout
     },
     mounted() {
-       auth.isAuthenticated().then(res => {
-         if(res === false && window.location.pathname.search('callback') == -1){
-           login()
-
-
-         }
-       } )
+      auth.isAuthenticated().then(res => {
+        if(res === false && window.location.pathname.search('callback') == -1){
+          login()
+        }
+      })
 
     }
 
