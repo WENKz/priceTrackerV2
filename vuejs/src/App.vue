@@ -107,9 +107,6 @@
         fixed: false,
         items: [{
           icon: 'bubble_chart',
-          title: 'Inspire'
-        }, {
-          icon: 'bubble_chart',
           title: 'List',
           path: '/list'
         }],

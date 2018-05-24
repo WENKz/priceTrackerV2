@@ -2,11 +2,26 @@
   <div>
 
     <div v-resize="onResize" >
+      <v-card-title>
+
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
       <v-data-table v-if="windowSize"
                     :headers="headers"
                     :items="items"
+                    :rows-per-page-items="[10]"
+                    :search="search"
                     hide-actions
                     class="elevation-1"
+                    :pagination.sync="pagination"
+                    hide-actions
       >
         <template slot="items" slot-scope="props">
           <td v-for="head in headers" class="text-xs-right"  >
@@ -16,8 +31,14 @@
 
           </td>
         </template>
+        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+          Your search for "{{ search }}" found no results.
+        </v-alert>
       </v-data-table>
 
+      <div class="text-xs-center pt-2">
+        <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+      </div>
       <div v-if="windowSize === false"
            hide-actions
            v-for="item in items"
@@ -82,6 +103,7 @@
     data () {
       return {
         search: '',
+        pagination: {},
         headers: [
           {
             text: 'ref',
@@ -93,6 +115,7 @@
         windowSize: true
       }
     },
+
     methods : {
       async mamethode() {
         let response = await fetch('http://tracker.local/');
@@ -125,6 +148,15 @@
         this.onResize()
 
 
+    },
+    computed: {
+      pages () {
+        if (this.pagination.rowsPerPage == null ||
+          this.pagination.totalItems == null
+        ) return 0
+
+        return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      }
     }
   }
 </script>
