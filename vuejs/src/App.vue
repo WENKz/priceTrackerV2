@@ -1,5 +1,9 @@
 <template>
-  <v-app>
+
+  <div>
+  <v-app :auth="auth"
+         :authenticated="authenticated">
+
     <v-navigation-drawer
       persistent
       :mini-variant="miniVariant"
@@ -17,6 +21,19 @@
         >
           <v-list-tile-action>
             <v-icon v-html="item.icon"></v-icon>
+            <button
+              class="btn btn-primary btn-margin"
+              v-if="!authenticated"
+              @click="login()">
+              Log In
+            </button>
+
+            <button
+              class="btn btn-primary btn-margin"
+              v-if="authenticated"
+              @click="logout()">
+              Log Out
+            </button>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title v-text="item.title"></v-list-tile-title>
@@ -67,12 +84,25 @@
       <span>&copy; 2017</span>
     </v-footer>
   </v-app>
+  </div>
 </template>
 
 <script>
-export default {
+  import AuthService from './Auth/AuthService'
+
+  const auth = new AuthService()
+
+  const { login, logout, authenticated, authNotifier } = auth
+
+
+  export default {
   data () {
+    authNotifier.on('authChange', authState => {
+      this.authenticated = authState.authenticated
+    })
     return {
+      auth,
+      authenticated,
       clipped: false,
       drawer: true,
       fixed: false,
@@ -90,6 +120,10 @@ export default {
       title: 'Vuetify.js'
     }
   },
+    methods:{
+      login,
+      logout
+    },
   name: 'App'
 }
 </script>
