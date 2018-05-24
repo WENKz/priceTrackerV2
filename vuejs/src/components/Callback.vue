@@ -10,8 +10,14 @@
     name: 'callback',
     props: ['auth'],
     data () {
-      this.auth.handleAuthentication()
       return {}
+    },mounted(){
+      this.auth.handleAuthentication().then(res => {
+        if(!this.auth.isAuthenticated()){
+          this.auth.login()
+        }
+      })
+
     }
   }
 </script>
