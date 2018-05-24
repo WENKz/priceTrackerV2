@@ -34,7 +34,7 @@
                 <tbody>
                 <tr v-for="head in headers" v-if="head.value !== 'ref' &&  parseInt(item[head.value]) > 0" >
 
-                  <td  class="grey--text">{{ replaceText(head.value) }} : </td>
+                  <td  class="grey--text">{{ replaceText(replaceText(head.value,'_url_',' '),'_',' ') }} : </td>
                   <td><a v-bind:href="item[head.link]">{{ item[head.value]}}</a></td>
 
                 </tr>
@@ -105,8 +105,8 @@
         this.headers=this.headers.concat(dataz);
 
       },
-      replaceText(value){
-        return value.replace('_url_',' ')
+      replaceText(value,key,replace){
+        return value.replace(key,replace)
       },
       onResize () {
         if(window.innerWidth < 1430){
