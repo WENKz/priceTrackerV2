@@ -1,8 +1,7 @@
 <template>
 
   <div>
-  <v-app :auth="auth"
-         :authenticated="authenticated">
+  <v-app >
 
     <v-navigation-drawer
       persistent
@@ -62,7 +61,8 @@
       </v-btn>
     </v-toolbar>
     <v-content>
-      <router-view/>
+      <router-view :auth="auth"
+                   :authenticated="authenticated"/>
     </v-content>
     <v-navigation-drawer
       temporary
@@ -96,34 +96,38 @@
 
 
   export default {
-  data () {
-    authNotifier.on('authChange', authState => {
-      this.authenticated = authState.authenticated
-    })
-    return {
-      auth,
-      authenticated,
-      clipped: false,
-      drawer: true,
-      fixed: false,
-      items: [{
-        icon: 'bubble_chart',
-        title: 'Inspire'
-      },{
-          icon:'bubble_chart',
+    name: 'App',
+    data() {
+      authNotifier.on('authChange', authState => {
+        this.authenticated = authState.authenticated
+      })
+      return {
+        auth,
+        authenticated,
+        clipped: false,
+        drawer: true,
+        fixed: false,
+        items: [{
+          icon: 'bubble_chart',
+          title: 'Inspire'
+        }, {
+          icon: 'bubble_chart',
           title: 'List',
-          path:'#/list'
-      }],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
-    }
-  },
-    methods:{
+          path: '/list'
+        }],
+        miniVariant: false,
+        right: true,
+        rightDrawer: false,
+        title: 'Vuetify.js'
+      }
+    },
+    methods: {
       login,
       logout
     },
-  name: 'App'
+    mounted() {
+    }
+
+
 }
 </script>

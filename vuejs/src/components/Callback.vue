@@ -1,8 +1,7 @@
-// src/components/Callback.vue
 
 <template>
   <div class="spinner">
-    <img src="../assets/loading.svg" alt="loading"/>
+    p
   </div>
 </template>
 
